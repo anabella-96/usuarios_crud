@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+ <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+    >
+<title>Lista de usuarios</title>
+<link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/styles.css') }}"
+    >
+</head>
+
+<body>
+
+<div class="contenedor">
+ <header class="encabezado">
+  <div>
+   <h1>Usuarios</h1>
+    <p> Administración de usuarios registrados </p>
+
+  </div>
+     <a href="/usuario_nuevo" class="boton boton-principal"> + Nuevo usuario </a>
+
+    </header>
+    {% with mensajes = get_flashed_messages(with_categories=true) %}
+     {% if mensajes %}
+      {% for categoria, mensaje in mensajes %}
+
+    <div class="mensaje {{ categoria }}">
+        {{ mensaje }}
+    </div>
+
+        {% endfor %}
+        {% endif %}
+
+    {% endwith %} 
+
+    <section class="tarjeta">
+        {% if usuarios %}
+
+    <table>
+
+  <thead>
+     <tr>
+       <th>ID</th>
+       <th>Nombre</th>
+       <th>Email</th>
+       <th>Fecha de creación</th>
+       <th>Acciones</th>
+    </tr>
+
+  </thead>
+
+<tbody>
+
+    {% for usuario in usuarios %}
+    <tr>
+    <td>{{ usuario.id }}</td>
+    <td><strong>{{ usuario.nombre}} {{ usuario.apellido }}</strong>
+
+    </td>
+        <td>{{ usuario.email }}</td>
+
+
+    <td>{% if usuario.created_at %} {{ usuario.created_at.strftime('%d/%m/%Y') }}
+        {% endif %}
+    </td>
+      
+    <td>
+        <div class="acciones">
+        <a href="/usuario/{{ usuario.id }}" class="enlace ver"> Ver </a>
+        <a href="/editar/{{ usuario.id }}" class="enlace editar"> Editar</a>
+        <a href="/borrar/{{ usuario.id }}" class="enlace eliminar" onclick=" return confirm('¿Seguro que quieres eliminar este usuario?');">Eliminar</a>
+                           
+        </div>
+        </td>
+            </tr>
+             {% endfor %}
+</tbody>
+
+
+    </table>
+       {% else %}
+
+    <div class="sin-usuarios">
+        <h2>No existen usuarios</h2>
+        <p>Todavía no has registrado ningún usuario.</p>
+        <a href="/usuario_nuevo" class="boton boton-principal"> Crear primer usuario </a>
+
+    </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+</div>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información del usuario</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+<div class="contenedor pequeño">
+    <div class="cabecera-formulario">
+        <span>INFORMACIÓN</span>
+        <h1>{{ usuario.nombre }} {{ usuario.apellido }}</h1>
+        <p>Datos del usuario #{{ usuario.id }}</p>
+    </div>
+
+    <section class="tarjeta datos">
+        <div class="dato">
+            <span>Nombre</span>
+            <strong>{{ usuario.nombre }}</strong>
+        </div>
+
+        <div class="dato">
+            <span>Apellido</span>
+            <strong>{{ usuario.apellido }}</strong>
+        </div>
+
+        <div class="dato">
+            <span>Correo electrónico</span>
+            <strong>{{ usuario.email }}</strong>
+        </div>
+
+        <div class="dato">
+            <span>Fecha de creación</span>
+            <strong>
+                {% if usuario.created_at %}
+                    {{ usuario.created_at.strftime('%d/%m/%Y') }}
+                {% endif %}
+            </strong>
+        </div>
+
+        <div class="dato">
+            <span>Última actualización</span>
+            <strong>
+                {% if usuario.updated_at %}
+                    {{ usuario.updated_at.strftime('%d/%m/%Y') }}
+                {% endif %}
+            </strong>
+        </div>
+
+        <div class="botones-formulario">
+            <a href="/" class="boton boton-secundario">Volver</a>
+            <a href="/editar/{{ usuario.id }}" class="boton boton-principal">Editar</a>
+        </div>
+    </section>
+</div>
+</body>
+</html>
+```
